@@ -1,28 +1,40 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <GameCardDisplay :isPlaying="isPlaying" />
+    <PlayerSupplyCards @started-game="startGame" />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import GameCardDisplay from './components/GameCardDisplay.vue'
+import PlayerSupplyCards from './components/PlayerSupplyCards.vue'
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
-    HelloWorld
+    PlayerSupplyCards,
+    GameCardDisplay
+  },
+  data: function() {
+    return {
+      isPlaying: false
+    }
+  },
+  methods: {
+    startGame: function() {
+      this.isPlaying = true
+    }
   }
-};
+}
 </script>
 
 <style>
+body {
+  background: #000;
+}
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
 }
 </style>
