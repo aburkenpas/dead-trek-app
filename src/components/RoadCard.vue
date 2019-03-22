@@ -15,4 +15,11 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.current-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+}
+</style>

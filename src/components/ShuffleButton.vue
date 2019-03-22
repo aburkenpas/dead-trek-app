@@ -64,11 +64,6 @@ export default {
         i++
       }
       this.$emit('cards-delt', this.playerCards)
-    },
-    getRandomInt: function(min, max) {
-      min = Math.ceil(min)
-      max = Math.floor(max)
-      return Math.floor(Math.random() * (max - min)) + min
     }
   }
 }

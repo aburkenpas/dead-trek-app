@@ -45,7 +45,10 @@ export default {
   methods: {
     deltCards: function(cards) {
       this.supplyCards = cards
+      this.supplyCards.sort()
       this.$emit('started-game', true)
+      this.$emit('players-cards', this.supplyCards)
+      console.log(this.supplyCards)
       return this.supplyCards
     }
   }
@@ -56,7 +59,10 @@ export default {
 .current-hand {
   background: #fff;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-around;
+}
+
+.card img {
+  width: 100%;
 }
 </style>

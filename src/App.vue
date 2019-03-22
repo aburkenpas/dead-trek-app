@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <GameCardDisplay :isPlaying="isPlaying" />
-    <PlayerSupplyCards @started-game="startGame" />
+    <GameCardDisplay :isPlaying="isPlaying" :playerHand="playerHand" />
+    <PlayerSupplyCards
+      @started-game="startGame"
+      @players-cards="setPlayerCards"
+    />
   </div>
 </template>
 
@@ -17,12 +20,16 @@ export default {
   },
   data: function() {
     return {
-      isPlaying: false
+      isPlaying: false,
+      playerHand: []
     }
   },
   methods: {
     startGame: function() {
       this.isPlaying = true
+    },
+    setPlayerCards: function(hand) {
+      this.playerHand = hand
     }
   }
 }
