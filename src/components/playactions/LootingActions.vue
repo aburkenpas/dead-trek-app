@@ -1,7 +1,9 @@
 <template>
   <div class="buttons-container looting-buttons">
-    <button @click="playStoreEvent">Play Looting Event</button>
-    <button @click="skipping">Leave Store</button>
+    <div v-if="!looting">
+      <button @click="playStoreEvent">Play Looting Event</button>
+      <button @click="skipping">Leave Store</button>
+    </div>
     <FightActions
       v-if="
         currentLootingCard.type == 'Single Zombie' ||
@@ -13,6 +15,8 @@
 
 <script>
 import FightActions from './FightActions.vue'
+import { mapState } from 'vuex'
+
 export default {
   name: 'StoreActions',
   components: {
@@ -168,6 +172,10 @@ export default {
       default: 3
     }
   },
+  computed: mapState({
+    currentLootCard: state => state.currentLootCard,
+    looting: state => state.looting
+  }),
   methods: {
     playStoreEvent: function() {
       let lootingCardCount = this.lootingCards.length - 1
@@ -175,10 +183,10 @@ export default {
       let randomLootingCard = this.lootingCards[randomNumber]
       this.lootingCards.splice(randomNumber, 1)
       this.currentLootingCard = randomLootingCard
-      this.$emit('current-looting-card', this.currentLootingCard)
+      this.$store.dispatch('setCurrentLootingCard', this.currentLootingCard)
     },
     skipping: function() {
-      this.$store('skip-resolved-card', true)
+      this.$store.dispatch('setRoadCardResolved', true)
     }
   }
 }

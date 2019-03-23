@@ -15,10 +15,10 @@ export default {
   },
   methods: {
     looting: function() {
-      this.$emit('looting', true)
+      this.$store.dispatch('lootingStatus', true)
     },
     skipping: function() {
-      this.$emit('skip-resolved-card', true)
+      this.$store.dispatch('setRoadCardResolved', true)
     }
   }
 }

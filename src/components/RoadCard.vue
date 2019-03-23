@@ -1,17 +1,17 @@
 <template>
   <div class="road-card">
-    <div class="current-card">{{ currentCard.type }}</div>
+    <div class="current-card">{{ currentRoadCard }}</div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'RoadCard',
-  props: {
-    currentCard: {
-      type: Object
-    }
-  }
+  computed: mapState({
+    currentRoadCard: state => state.currentRoadCard.type
+  })
 }
 </script>
 

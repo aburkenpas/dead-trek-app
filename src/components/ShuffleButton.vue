@@ -1,12 +1,14 @@
 <template>
   <div class="shuffle-button-container">
-    <button @click="deal" v-if="playerCards.length == 0">
+    <button @click="deal" v-if="playerSupplyCards.length == 0">
       Deal Supply Cards
     </button>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'ShuffleButton',
   data: function() {
@@ -51,10 +53,15 @@ export default {
       ]
     }
   },
+  computed: mapState({
+    playerSupplyCards: state => state.playerSupplyCards
+  }),
   methods: {
-    deal: function() {
+    deal() {
       let startingCardAmount = 10
       let i = 0
+
+      // Deal Cards
       while (i < startingCardAmount) {
         let supplyCardCount = this.supplyCards.length - 1
         let randomNumber = this.getRandomInt(0, supplyCardCount)
@@ -63,7 +70,13 @@ export default {
         this.playerCards.push(randomSupplyCard)
         i++
       }
-      this.$emit('cards-delt', this.playerCards)
+
+      // Sort cards
+      this.playerCards.sort()
+
+      // Change state
+      this.$store.dispatch('startGame')
+      this.$store.dispatch('supplyCardsDelt', this.playerCards)
     }
   }
 }
@@ -73,6 +86,7 @@ export default {
 .shuffle-button-container {
   padding: 100px 0;
 }
+
 button {
   font-size: 20px;
   background: green;

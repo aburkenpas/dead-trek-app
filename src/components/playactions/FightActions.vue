@@ -1,84 +1,70 @@
 <template>
   <div class="fight-buttons">
-    <div class="message">{{ message }}</div>
     <div class="buttons-container">
       <button @click="fight('melee')">Melee Attack</button>
       <!-- Need to check if card is in players hand for bottom two -->
-      <button v-if="playerHand.includes('Ammo')" @click="fight('ammo')">
-        Ammo Attack
-      </button>
-      <button v-if="playerHand.includes('Molotov')" @click="fight('molotov')">
-        Molotov Attack
-      </button>
+      <button v-if="playerSupplyCards.includes('Ammo')" @click="fight('ammo')">Ammo Attack</button>
+      <button v-if="playerSupplyCards.includes('Molotov')" @click="fight('molotov')">Molotov Attack</button>
       <!-- Need to add die roll step -->
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'FightActions',
-  data: function() {
-    return {
-      resolvedRoadCard: false,
-      message: 'Chose your attack style'
-    }
-  },
-  props: {
-    currentCard: {
-      type: Object
-    },
-    playerHand: {
-      type: Array
-    }
-  },
-  beforeCreate: function() {
-    //Check hand status
-  },
+  computed: mapState({
+    currentRoadCard: state => state.currentRoadCard,
+    playerSupplyCards: state => state.playerSupplyCards
+  }),
   methods: {
     fight: function(attack) {
       let numberToDefeat
       let roll
       let cardIndex
+      let message
 
       if (attack == 'melee') {
-        numberToDefeat = this.currentCard.melee
+        numberToDefeat = this.currentRoadCard.melee
       } else if (attack == 'ammo') {
-        numberToDefeat = this.currentCard.ammo
-        cardIndex = this.playerHand.indexOf('Ammo')
-        this.playerHand.splice(cardIndex, 1)
+        numberToDefeat = this.currentRoadCard.ammo
+        cardIndex = this.playerSupplyCards.indexOf('Ammo')
+        // Update supply state
+        this.$store.dispatch('removeUsedSupply', cardIndex)
       } else if (attack == 'molotov') {
-        numberToDefeat = this.currentCard.molotov
-        cardIndex = this.playerHand.indexOf('Molotov')
-        this.playerHand.splice(cardIndex, 1)
+        numberToDefeat = this.currentRoadCard.molotov
+        cardIndex = this.playerSupplyCards.indexOf('Molotov')
+        // Update supply state
+        this.$store.dispatch('removeUsedSupply', cardIndex)
       }
 
       roll = this.getRandomInt(1, 10)
       if (roll >= numberToDefeat) {
-        this.resolvedRoadCard = true
-        this.message = `Great job you got him by rolling a ${roll}`
-        setTimeout(() => {
-          this.$emit('resolved-card', this.resolvedRoadCard)
-        }, 3000)
+        message = `Great job you got him by rolling a ${roll}. Play your next Road card`
+        // Update state
+        this.$store.dispatch('setRoadCardResolved', true)
+        this.$store.dispatch('setRoadCardResolved', true, message)
+        this.$store.dispatch('updateMessage', message)
       } else {
         if (attack == 'melee') {
-          cardIndex = this.playerHand.indexOf('Health')
+          cardIndex = this.playerSupplyCards.indexOf('Health')
           if (cardIndex == -1) {
-            this.gameOver = true
-            this.message = `GAME OVER`
+            message = `GAME OVER`
+            // Update state
+            this.$store.dispatch('loser')
+            this.$store.dispatch('updateMessage', message)
           } else {
-            this.playerHand.splice(cardIndex, 1)
-            this.message = `You rolled a ${roll} and you needed to roll a ${numberToDefeat}.  You lose one health card.`
+            message = `You rolled a ${roll} and you needed to roll a ${numberToDefeat}.  You lose one health card.`
+            this.$store.dispatch('removeUsedSupply', cardIndex)
+            this.$store.dispatch('updateMessage', message)
           }
         } else {
-          this.message = `You rolled a ${roll} and you needed to roll a ${numberToDefeat}`
+          message = `You rolled a ${roll} and you needed to roll a ${numberToDefeat}`
+          this.$store.dispatch('updateMessage', message)
         }
       }
-    },
-    getRandomInt: function(min, max) {
-      min = Math.ceil(min)
-      max = Math.floor(max)
-      return Math.floor(Math.random() * (max - min)) + min
     }
   }
 }

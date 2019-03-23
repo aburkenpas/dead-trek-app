@@ -5,13 +5,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'StoreCards',
-  props: {
-    currentLootCard: {
-      type: Object
-    }
-  }
+  computed: mapState({
+    currentLootCard: state => state.currentLootCard,
+    looting: state => state.looting
+  })
 }
 </script>
 

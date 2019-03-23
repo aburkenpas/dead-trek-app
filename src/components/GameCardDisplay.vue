@@ -2,17 +2,11 @@
   <div class="game-card-display-container">
     <div class="game-card-display">
       <slot>
-        <RoadCard v-if="!isLooting" :currentCard="currentCard" />
-        <StoreCards v-else :currentLootCard="currentLootCard" />
+        <RoadCard v-if="!looting" />
+        <StoreCards v-else />
       </slot>
     </div>
-    <GameButtons
-      v-if="isPlaying"
-      :playerHand="playerHand"
-      @current-card="getCard"
-      @is-looting="isGoingToLooting"
-      @current-looting-card="setCurrentLootCard"
-    />
+    <GameButtons v-if="playing" />
   </div>
 </template>
 
@@ -20,6 +14,7 @@
 import RoadCard from './RoadCard.vue'
 import StoreCards from './StoreCards.vue'
 import GameButtons from './GameButtons.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'GameCardDisplay',
@@ -28,36 +23,10 @@ export default {
     StoreCards,
     GameButtons
   },
-  data: function() {
-    return {
-      currentCard: {
-        type: 'Start'
-      },
-      isLooting: false,
-      currentLootCard: null
-    }
-  },
-  props: {
-    isPlaying: {
-      type: Boolean
-    },
-    playerHand: {
-      type: Array
-    }
-  },
-  methods: {
-    getCard: function(card) {
-      this.currentCard = card
-      return this.currentCard
-    },
-    isGoingToLooting: function(looting) {
-      this.isLooting = looting
-      return this.isLooting
-    },
-    setCurrentLootCard: function(lootCard) {
-      this.currentLootCard = lootCard
-    }
-  }
+  computed: mapState({
+    playing: state => state.playing,
+    looting: state => state.looting
+  })
 }
 </script>
 

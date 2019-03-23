@@ -3,46 +3,28 @@
     <button
       v-if="currentRoadCard.type == 'Start' || resolvedRoadCard == true"
       @click="playRoadCard"
-    >Play Road Card</button>
-    <LootingActions
-      v-if="isLooting"
-      :currentCard="currentRoadCard"
-      @skip-resolved-card="cardIsResolved"
-      @current-looting-card="passCurrentLootCard"
-    />
+    >
+      Play Road Card
+    </button>
+    <LootingActions v-if="looting" />
     <StoreActions
-      :currentCard="currentRoadCard"
       v-if="
         currentRoadCard.type == 'Store' &&
           resolvedRoadCard == false &&
-          isLooting == false
+          looting == false
       "
-      @skip-resolved-card="cardIsResolved"
-      @looting="isGoingToLooting"
     />
     <FightActions
-      :currentCard="currentRoadCard"
-      :playerHand="playerHand"
       v-else-if="
         (currentRoadCard.type == 'Horde' && resolvedRoadCard == false) ||
           (currentRoadCard.type == 'Boss' && resolvedRoadCard == false)
       "
-      @resolved-card="cardIsResolved"
     />
-    <BridgeDownActions
-      :currentCard="currentRoadCard"
-      v-else-if="currentRoadCard.type == 'Bridge Down'"
-    />
-    <TrapActions :currentCard="currentRoadCard" v-else-if="currentRoadCard.type == 'Trap'"/>
-    <SupplyCacheActions
-      :currentCard="currentRoadCard"
-      v-else-if="currentRoadCard.type == 'Supply Cache'"
-    />
-    <SurvivorActions
-      :currentCard="currentRoadCard"
-      v-else-if="currentRoadCard.type == 'Survivors'"
-    />
-    <HuntingActions :currentCard="currentRoadCard" v-else-if="currentRoadCard.type == 'Hunting'"/>
+    <BridgeDownActions v-else-if="currentRoadCard.type == 'Bridge Down'" />
+    <TrapActions v-else-if="currentRoadCard.type == 'Trap'" />
+    <SupplyCacheActions v-else-if="currentRoadCard.type == 'Supply Cache'" />
+    <SurvivorActions v-else-if="currentRoadCard.type == 'Survivors'" />
+    <HuntingActions v-else-if="currentRoadCard.type == 'Hunting'" />
   </div>
 </template>
 
@@ -55,6 +37,7 @@ import TrapActions from './playactions/TrapActions.vue'
 import SupplyCacheActions from './playactions/SupplyCacheActions.vue'
 import SurvivorActions from './playactions/SurvivorActions.vue'
 import HuntingActions from './playactions/HuntingActions.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'GameButtons',
@@ -80,21 +63,13 @@ export default {
     hordeMolotov: {
       type: Number,
       default: 2
-    },
-    playerHand: {
-      type: Array
     }
   },
   data: function() {
     return {
-      currentRoadCard: {
-        type: 'Start'
-      },
       currentLootCard: {
         type: null
       },
-      resolvedRoadCard: false,
-      isLooting: false,
       roadCards: [
         { type: 'Store', events: 2 },
         { type: 'Store', events: 2 },
@@ -117,7 +92,7 @@ export default {
         { type: 'Store', events: 4 },
         { type: 'Store', events: 4 },
         { type: 'Store', events: 4 }
-        // // # Small Horde
+        // # Small Horde
         // {
         //   type: 'Horde',
         //   size: 'Small',
@@ -326,28 +301,37 @@ export default {
       ]
     }
   },
+  computed: mapState({
+    currentRoadCard: state => state.currentRoadCard,
+    resolvedRoadCard: state => state.resolvedRoadCard,
+    looting: state => state.looting
+  }),
   methods: {
     playRoadCard: function() {
+      let roadCard
       let roadCardCount = this.roadCards.length - 1
       let randomNumber = this.getRandomInt(0, roadCardCount)
       let randomRoadCard = this.roadCards[randomNumber]
       this.roadCards.splice(randomNumber, 1)
-      this.currentRoadCard = randomRoadCard
-      this.resolvedRoadCard = false
-      this.$emit('current-card', this.currentRoadCard)
+      roadCard = randomRoadCard
+
+      // Set state
+      this.setMessage(roadCard)
+      this.$store.dispatch('setRoadCardResolved', false)
+      this.$store.dispatch('setCurrentRoadCard', roadCard)
     },
-    cardIsResolved: function(resolved) {
-      this.resolvedRoadCard = resolved
-      return this.resolvedRoadCard
-    },
-    isGoingToLooting: function(looting) {
-      this.isLooting = looting
-      this.$emit('is-looting', this.isLooting)
-    },
-    passCurrentLootCard: function(lootCard) {
-      console.log('Pass Current Loot Card')
-      this.currentLootCard = lootCard
-      this.$emit('current-looting-card', this.currentLootCard)
+    setMessage(card) {
+      let message
+      let cardType = card.type
+      if (cardType == 'Horde' || cardType == 'Boss') {
+        message = `Oh no it's a ${cardType} E! Chose your attack style`
+      } else if (cardType == 'Store') {
+        message = `Look a store with ${
+          card.events
+        } events!  Maybe we can find some supplies`
+      }
+
+      this.$store.dispatch('updateMessage', message)
     }
   }
 }
