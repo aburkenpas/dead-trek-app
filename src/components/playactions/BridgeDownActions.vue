@@ -11,11 +11,6 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'BridgeDownActions',
-  props: {
-    currentCard: {
-      type: Object
-    }
-  },
   computed: mapState({
     resolvedRoadCard: state => state.resolvedRoadCard
   }),

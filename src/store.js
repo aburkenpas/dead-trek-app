@@ -15,7 +15,7 @@ export default new Vuex.Store({
     loser: false,
     playing: false,
     supplyCards: supplyCards,
-    playerSupplyCards: new Array(),
+    playerSupplyCards: [],
     currentRoadCard: {
       type: 'Start'
     },

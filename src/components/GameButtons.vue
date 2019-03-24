@@ -1,21 +1,27 @@
 <template>
   <div class="game-buttons">
     <button
-      v-if="currentRoadCard.type == 'Start' || resolvedRoadCard == true"
+      v-if="
+        (currentRoadCard.type == 'Start' || resolvedRoadCard == true) && !loser
+      "
       @click="playRoadCard"
-    >Play Road Card</button>
-    <StoreActions v-if="currentRoadCard.type == 'Store' && resolvedRoadCard == false"/>
+    >
+      Play Road Card
+    </button>
+    <StoreActions
+      v-if="currentRoadCard.type == 'Store' && resolvedRoadCard == false"
+    />
     <FightActions
       v-else-if="
         (currentRoadCard.type == 'Horde' && resolvedRoadCard == false) ||
           (currentRoadCard.type == 'Boss' && resolvedRoadCard == false)
       "
     />
-    <BridgeDownActions v-else-if="currentRoadCard.type == 'Bridge Down'"/>
-    <TrapActions v-else-if="currentRoadCard.type == 'Trap'"/>
-    <SupplyCacheActions v-else-if="currentRoadCard.type == 'Supply Cache'"/>
-    <SurvivorActions v-else-if="currentRoadCard.type == 'Survivors'"/>
-    <HuntingActions v-else-if="currentRoadCard.type == 'Hunting'"/>
+    <BridgeDownActions v-else-if="currentRoadCard.type == 'Bridge Down'" />
+    <TrapActions v-else-if="currentRoadCard.type == 'Trap'" />
+    <SupplyCacheActions v-else-if="currentRoadCard.type == 'Supply Cache'" />
+    <SurvivorActions v-else-if="currentRoadCard.type == 'Survivors'" />
+    <HuntingActions v-else-if="currentRoadCard.type == 'Hunting'" />
   </div>
 </template>
 
@@ -200,11 +206,11 @@ export default {
         //   hitPoints: 3
         // }
         // # Bridge Down
-        { type: 'Bridge Down' },
-        { type: 'Bridge Down' },
-        { type: 'Bridge Down' },
-        { type: 'Bridge Down' },
-        { type: 'Bridge Down' }
+        // { type: 'Bridge Down' },
+        // { type: 'Bridge Down' },
+        // { type: 'Bridge Down' },
+        // { type: 'Bridge Down' },
+        // { type: 'Bridge Down' },
         // // # Trap
         // { type: 'Trap', supply: 'Food' },
         // { type: 'Trap', supply: 'Food' },
@@ -212,12 +218,12 @@ export default {
         // { type: 'Trap', supply: 'Health' },
         // { type: 'Trap', supply: 'Health' },
         // // # Supply Cache
-        // { type: 'Supply Cache' },
-        // { type: 'Supply Cache' },
-        // { type: 'Supply Cache' },
-        // { type: 'Supply Cache' },
-        // { type: 'Supply Cache' },
-        // { type: 'Supply Cache' },
+        { type: 'Supply Cache' },
+        { type: 'Supply Cache' },
+        { type: 'Supply Cache' },
+        { type: 'Supply Cache' },
+        { type: 'Supply Cache' },
+        { type: 'Supply Cache' }
         // // # Survivors
         // { type: 'Survivors' },
         // { type: 'Survivors' },
@@ -293,7 +299,8 @@ export default {
   computed: mapState({
     currentRoadCard: state => state.currentRoadCard,
     resolvedRoadCard: state => state.resolvedRoadCard,
-    looting: state => state.looting
+    looting: state => state.looting,
+    loser: state => state.loser
   }),
   methods: {
     playRoadCard: function() {
