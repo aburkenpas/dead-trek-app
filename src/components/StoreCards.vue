@@ -16,4 +16,12 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.playable-store-cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+  font-size: 35px;
+}
+</style>

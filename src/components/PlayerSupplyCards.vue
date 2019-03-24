@@ -6,18 +6,24 @@
     <div class="current-hand">
       <div class="card" v-for="card in playerSupplyCards" :key="card.id">
         <img
-          v-if="card == 'Ammo'"
+          v-if="card.type == 'Ammo'"
           src="../assets/images/cards/supply/ammo.png"
           :alt="card"
         />
         <img
-          v-else-if="card == 'Health'"
+          v-else-if="card.type == 'Health'"
           src="../assets/images/cards/supply/health.png"
           :alt="card"
         />
         <img
-          v-else-if="card == 'Molotov'"
+          v-else-if="card.type == 'Molotov'"
           src="../assets/images/cards/supply/molotov.png"
+          :alt="card"
+        />
+        <img v-else-if="card.type == 'Special'" :src="card.image" :alt="card" />
+        <img
+          v-else-if="card.type == 'Food'"
+          src="../assets/images/cards/loot/food.png"
           :alt="card"
         />
       </div>

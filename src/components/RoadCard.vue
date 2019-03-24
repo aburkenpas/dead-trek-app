@@ -21,5 +21,6 @@ export default {
   justify-content: center;
   align-items: center;
   min-height: 500px;
+  font-size: 35px;
 }
 </style>

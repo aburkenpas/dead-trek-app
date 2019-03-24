@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+// Import data
+import supplyCards from './data/supply-cards.json'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -11,12 +14,14 @@ export default new Vuex.Store({
     winner: false,
     loser: false,
     playing: false,
-    playerSupplyCards: [],
+    supplyCards: supplyCards,
+    playerSupplyCards: new Array(),
     currentRoadCard: {
       type: 'Start'
     },
     resolvedRoadCard: true,
     looting: false,
+    inLootAction: false,
     currentLootCard: {
       type: 'Start'
     }
@@ -41,11 +46,18 @@ export default new Vuex.Store({
     DEAL_SUPPLY_CARDS(state, supplyCards) {
       state.playerSupplyCards = supplyCards
     },
+    REMOVE_DELT_CARDS(state, index) {
+      state.supplyCards.splice(index, 1)
+    },
     SET_CURRENT_ROAD_CARD(state, roadCard) {
       state.currentRoadCard = roadCard
     },
     SET_ROAD_CARD_RESOLVED(state, status) {
       state.resolvedRoadCard = status
+      if (status == true) {
+        state.cardsLeft--
+        state.cardsLeftInBlock--
+      }
     },
     REMOVE_USED_SUPPLY(state, index) {
       state.playerSupplyCards.splice(index, 1)
@@ -55,6 +67,9 @@ export default new Vuex.Store({
     },
     LOOTING_STATUS(state, status) {
       state.looting = status
+    },
+    LOOTING_ACTION_STATUS(state, status) {
+      state.inLootAction = status
     },
     SET_CURRENT_LOOTING_CARD(state, lootCard) {
       state.currentLootCard = lootCard
@@ -73,6 +88,9 @@ export default new Vuex.Store({
     supplyCardsDelt({ commit }, supplyCards) {
       commit('DEAL_SUPPLY_CARDS', supplyCards)
     },
+    removedDeltCards({ commit }, index) {
+      commit('REMOVE_DELT_CARDS', index)
+    },
     setCurrentRoadCard({ commit }, roadCard) {
       commit('SET_CURRENT_ROAD_CARD', roadCard)
     },
@@ -87,6 +105,9 @@ export default new Vuex.Store({
     },
     lootingStatus({ commit }, status) {
       commit('LOOTING_STATUS', status)
+    },
+    setLootActionStatus({ commit }, status) {
+      commit('LOOTING_ACTION_STATUS', status)
     },
     setCurrentLootingCard({ commit }, lootCard) {
       commit('SET_CURRENT_LOOTING_CARD', lootCard)

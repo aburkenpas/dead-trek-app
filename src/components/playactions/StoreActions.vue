@@ -1,27 +1,50 @@
 <template>
-  <div class="buttons-container store-buttons">
-    <button @click="looting">Loot Store</button>
-    <button @click="skipping">Skip Store</button>
+  <div class="store-action-buttons">
+    <button v-if="!looting" @click="startLooting">Loot Store</button>
+    <button v-if="!looting" @click="skipping">Skip Store</button>
+    <LootingActions v-if="looting" />
   </div>
 </template>
 
 <script>
+import LootingActions from './LootingActions.vue'
+import { mapState } from 'vuex'
+
 export default {
   name: 'StoreActions',
-  props: {
-    currentCard: {
-      type: Object
-    }
+  components: {
+    LootingActions
   },
+  computed: mapState({
+    looting: state => state.looting
+  }),
   methods: {
-    looting: function() {
+    startLooting: function() {
+      // Set loot message
+      let message = `See what you can find`
+
+      // Set state to looting and update message
+      this.$store.dispatch('updateMessage', message)
       this.$store.dispatch('lootingStatus', true)
     },
     skipping: function() {
+      // Set skip message
+      let message = `Not worth it! Play next road card`
+
+      // Set state to looting and update message
+      this.$store.dispatch('updateMessage', message)
       this.$store.dispatch('setRoadCardResolved', true)
     }
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.store-action-buttons {
+  display: flex;
+  justify-content: center;
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+}
+</style>

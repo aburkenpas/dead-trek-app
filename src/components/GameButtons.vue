@@ -6,13 +6,8 @@
     >
       Play Road Card
     </button>
-    <LootingActions v-if="looting" />
     <StoreActions
-      v-if="
-        currentRoadCard.type == 'Store' &&
-          resolvedRoadCard == false &&
-          looting == false
-      "
+      v-if="currentRoadCard.type == 'Store' && resolvedRoadCard == false"
     />
     <FightActions
       v-else-if="
@@ -29,7 +24,6 @@
 </template>
 
 <script>
-import LootingActions from './playactions/LootingActions.vue'
 import StoreActions from './playactions/StoreActions.vue'
 import FightActions from './playactions/FightActions.vue'
 import BridgeDownActions from './playactions/BridgeDownActions.vue'
@@ -42,7 +36,6 @@ import { mapState } from 'vuex'
 export default {
   name: 'GameButtons',
   components: {
-    LootingActions,
     StoreActions,
     FightActions,
     BridgeDownActions,

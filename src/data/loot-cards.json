@@ -1,0 +1,61 @@
+[
+  { "type": "Single Zombie" },
+  { "type": "Single Zombie" },
+  { "type": "Single Zombie" },
+  { "type": "Single Zombie" },
+  { "type": "Single Zombie" },
+  { "type": "Single Zombie" },
+  { "type": "Single Zombie" },
+  { "type": "Single Zombie" },
+  { "type": "Single Zombie" },
+  { "type": "Single Zombie" },
+  { "type": "Single Zombie" },
+  { "type": "Single Zombie" },
+  { "type": "Single Zombie" },
+  { "type": "Double Zombie" },
+  { "type": "Double Zombie" },
+  { "type": "Supply" },
+  { "type": "Supply" },
+  { "type": "Supply" },
+  { "type": "Supply" },
+  { "type": "Supply" },
+  { "type": "Supply" },
+  { "type": "Supply" },
+  { "type": "Supply" },
+  { "type": "Supply" },
+  { "type": "Supply" },
+  { "type": "Supply" },
+  { "type": "Supply" },
+  { "type": "Supply" },
+  { "type": "Supply" },
+  { "type": "Supply" },
+  { "type": "Food" },
+  { "type": "Food" },
+  { "type": "Food" },
+  { "type": "Food" },
+  {
+    "type": "Special",
+    "item": "Chainsaw",
+    "image": "../assets/images/cards/loot/chainsaw.png"
+  },
+  {
+    "type": "Special",
+    "item": "Flame Thrower",
+    "image": "../assets/images/cards/loot/flame-thrower.png"
+  },
+  {
+    "type": "Special",
+    "item": "Minigun",
+    "image": "../assets/images/cards/loot/minigun.png"
+  },
+  {
+    "type": "Special",
+    "item": "Grenade",
+    "image": "../assets/images/cards/loot/grenade.png"
+  },
+  {
+    "type": "Special",
+    "item": "Bazooka",
+    "image": "../assets/images/cards/loot/bazooka.png"
+  }
+]

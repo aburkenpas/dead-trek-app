@@ -1,21 +1,50 @@
 <template>
-  <div class="buttons-container looting-buttons">
-    <div v-if="!looting">
-      <button @click="playStoreEvent">Play Looting Event</button>
-      <button @click="skipping">Leave Store</button>
-    </div>
+  <div class="loot-decision-buttons">
+    <button v-if="!inLootAction && looting" @click="playStoreEvent">
+      Play Looting Event
+    </button>
+    <button
+      v-if="!inLootAction && looting && currentEvent > 0"
+      @click="skipping"
+    >
+      Leave Store
+    </button>
     <FightActions
       v-if="
-        currentLootingCard.type == 'Single Zombie' ||
-          currentLootingCard.type == 'Double Zombie'
+        (currentLootCard.type == 'Single Zombie' ||
+          currentLootCard.type == 'Double Zombie') &&
+          inLootAction == true
       "
+      :currentEvent="currentEvent"
+      :events="events"
     />
+    <button
+      v-else-if="currentLootCard.type == 'Supply' && inLootAction == true"
+      @click="drawSupply"
+    >
+      Draw Supply Card
+    </button>
+    <button
+      v-else-if="currentLootCard.type == 'Food' && inLootAction == true"
+      @click="addToHand"
+    >
+      Collect Food
+    </button>
+    <button
+      v-else-if="currentLootCard.type == 'Special' && inLootAction == true"
+      @click="addToHand"
+    >
+      Collect Special
+    </button>
   </div>
 </template>
 
 <script>
 import FightActions from './FightActions.vue'
 import { mapState } from 'vuex'
+
+// Import data
+// import lootCards from './data/loot-cards.json'
 
 export default {
   name: 'StoreActions',
@@ -24,10 +53,7 @@ export default {
   },
   data: function() {
     return {
-      lootingResolved: false,
-      currentLootingCard: {
-        type: 'Start'
-      },
+      currentEvent: 0,
       lootingCards: [
         // Single Zombies
         {
@@ -106,7 +132,7 @@ export default {
           melee: this.storeMelee2,
           ammo: this.storeAmmo2
         },
-        // Supplies
+        // // Supplies
         { type: 'Supply' },
         { type: 'Supply' },
         { type: 'Supply' },
@@ -130,31 +156,33 @@ export default {
         // Special
         {
           type: 'Special',
-          item: 'Chainsaw'
+          item: 'Chainsaw',
+          image: require('../../assets/images/cards/loot/chainsaw.png')
         },
         {
           type: 'Special',
-          item: 'Flamethrower'
+          item: 'Flame Thrower',
+          image: require('../../assets/images/cards/loot/flame-thrower.png')
         },
         {
           type: 'Special',
-          item: 'Minigun'
+          item: 'Minigun',
+          image: require('../../assets/images/cards/loot/minigun.png')
         },
         {
           type: 'Special',
-          item: 'Grenade'
+          item: 'Grenade',
+          image: require('../../assets/images/cards/loot/grenade.png')
         },
         {
           type: 'Special',
-          item: 'Bazoka'
+          item: 'Bazooka',
+          image: require('../../assets/images/cards/loot/bazooka.png')
         }
       ]
     }
   },
   props: {
-    currentCard: {
-      type: Object
-    },
     storeMelee1: {
       type: Number,
       default: 4
@@ -172,24 +200,87 @@ export default {
       default: 3
     }
   },
-  computed: mapState({
-    currentLootCard: state => state.currentLootCard,
-    looting: state => state.looting
-  }),
-  methods: {
-    playStoreEvent: function() {
-      let lootingCardCount = this.lootingCards.length - 1
-      let randomNumber = this.getRandomInt(1, lootingCardCount)
-      let randomLootingCard = this.lootingCards[randomNumber]
-      this.lootingCards.splice(randomNumber, 1)
-      this.currentLootingCard = randomLootingCard
-      this.$store.dispatch('setCurrentLootingCard', this.currentLootingCard)
+  computed: {
+    events() {
+      return this.currentRoadCard.events
     },
-    skipping: function() {
+    ...mapState({
+      currentRoadCard: state => state.currentRoadCard,
+      currentLootCard: state => state.currentLootCard,
+      looting: state => state.looting,
+      inLootAction: state => state.inLootAction,
+      supplyCards: state => state.supplyCards,
+      playerSupplyCards: state => state.playerSupplyCards
+    })
+  },
+  methods: {
+    playStoreEvent() {
+      // Iterate current event
+      this.currentEvent++
+
+      // Draw loot card
+      let lootingCard = this.drawCard(1, this.lootingCards)
+
+      // Set state of looting and current card
+      this.$store.dispatch('setLootActionStatus', true)
+      this.$store.dispatch('setCurrentLootingCard', lootingCard[0])
+    },
+    skipping() {
+      // Set state status
       this.$store.dispatch('setRoadCardResolved', true)
+      this.$store.dispatch('lootingStatus', false)
+    },
+    drawSupply() {
+      // Draw supply card
+      let supplyGained = this.drawCard(1, this.supplyCards)
+      let cardName = supplyGained[0]
+
+      // Combine with current supplies (Mabye a better way for this)
+      supplyGained.push.apply(supplyGained, this.playerSupplyCards)
+
+      // Sort Cards
+      supplyGained.sort((a, b) =>
+        a.type > b.type ? 1 : b.type > a.type ? -1 : 0
+      )
+
+      // Set message
+      let message = `You gained a ${cardName} card! Play or Skip next loot card.`
+
+      // Set state by updating supply cards and ending looting action
+      this.$store.dispatch('supplyCardsDelt', supplyGained)
+      this.$store.dispatch('setLootActionStatus', false)
+      if (this.currentEvent == this.events) {
+        message = `You gained a ${cardName} card! Play next Road card.`
+        this.$store.dispatch('setRoadCardResolved', true)
+      }
+      this.$store.dispatch('updateMessage', message)
+    },
+    addToHand() {
+      let itemGained = [this.currentLootCard]
+
+      // Add item to supplies hand
+      itemGained.push.apply(itemGained, this.playerSupplyCards)
+
+      // Sort Cards
+      itemGained.sort((a, b) =>
+        a.type > b.type ? 1 : b.type > a.type ? -1 : 0
+      )
+
+      console.log(itemGained)
+      // Update state of looting
+      this.$store.dispatch('supplyCardsDelt', itemGained)
+      this.$store.dispatch('setLootActionStatus', false)
+      if (this.currentEvent == this.events) {
+        this.$store.dispatch('setRoadCardResolved', true)
+      }
     }
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.loot-decision-buttons {
+  display: flex;
+  width: 100%;
+}
+</style>
