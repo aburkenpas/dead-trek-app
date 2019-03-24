@@ -1,8 +1,6 @@
 <template>
   <div class="buttons-container trap">
-    <button v-if="!resolvedRoadCard" @click="useSupply">
-      Use {{ currentRoadCard.supply }}
-    </button>
+    <button v-if="!resolvedRoadCard" @click="useSupply">Use {{ currentRoadCard.supply }}</button>
   </div>
 </template>
 
@@ -30,7 +28,7 @@ export default {
 
       if (playerHasCard != -1) {
         // Set message
-        message = `Good thing I had ${this.currentRoadCard.supply}`
+        message = `Good thing you had ${this.currentRoadCard.supply}`
 
         // Update state for resolved and remove card
         this.$store.dispatch('removeUsedSupply', playerHasCard)
