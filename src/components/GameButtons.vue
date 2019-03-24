@@ -3,23 +3,19 @@
     <button
       v-if="currentRoadCard.type == 'Start' || resolvedRoadCard == true"
       @click="playRoadCard"
-    >
-      Play Road Card
-    </button>
-    <StoreActions
-      v-if="currentRoadCard.type == 'Store' && resolvedRoadCard == false"
-    />
+    >Play Road Card</button>
+    <StoreActions v-if="currentRoadCard.type == 'Store' && resolvedRoadCard == false"/>
     <FightActions
       v-else-if="
         (currentRoadCard.type == 'Horde' && resolvedRoadCard == false) ||
           (currentRoadCard.type == 'Boss' && resolvedRoadCard == false)
       "
     />
-    <BridgeDownActions v-else-if="currentRoadCard.type == 'Bridge Down'" />
-    <TrapActions v-else-if="currentRoadCard.type == 'Trap'" />
-    <SupplyCacheActions v-else-if="currentRoadCard.type == 'Supply Cache'" />
-    <SurvivorActions v-else-if="currentRoadCard.type == 'Survivors'" />
-    <HuntingActions v-else-if="currentRoadCard.type == 'Hunting'" />
+    <BridgeDownActions v-else-if="currentRoadCard.type == 'Bridge Down'"/>
+    <TrapActions v-else-if="currentRoadCard.type == 'Trap'"/>
+    <SupplyCacheActions v-else-if="currentRoadCard.type == 'Supply Cache'"/>
+    <SurvivorActions v-else-if="currentRoadCard.type == 'Survivors'"/>
+    <HuntingActions v-else-if="currentRoadCard.type == 'Hunting'"/>
   </div>
 </template>
 
@@ -64,27 +60,27 @@ export default {
         type: null
       },
       roadCards: [
-        { type: 'Store', events: 2 },
-        { type: 'Store', events: 2 },
-        { type: 'Store', events: 2 },
-        { type: 'Store', events: 2 },
-        // # Medium Store
-        { type: 'Store', events: 3 },
-        { type: 'Store', events: 3 },
-        { type: 'Store', events: 3 },
-        { type: 'Store', events: 3 },
-        { type: 'Store', events: 3 },
-        { type: 'Store', events: 3 },
-        { type: 'Store', events: 3 },
-        { type: 'Store', events: 3 },
-        { type: 'Store', events: 3 },
-        // # Large Store
-        { type: 'Store', events: 4 },
-        { type: 'Store', events: 4 },
-        { type: 'Store', events: 4 },
-        { type: 'Store', events: 4 },
-        { type: 'Store', events: 4 },
-        { type: 'Store', events: 4 }
+        // { type: 'Store', events: 2 },
+        // { type: 'Store', events: 2 },
+        // { type: 'Store', events: 2 },
+        // { type: 'Store', events: 2 },
+        // // # Medium Store
+        // { type: 'Store', events: 3 },
+        // { type: 'Store', events: 3 },
+        // { type: 'Store', events: 3 },
+        // { type: 'Store', events: 3 },
+        // { type: 'Store', events: 3 },
+        // { type: 'Store', events: 3 },
+        // { type: 'Store', events: 3 },
+        // { type: 'Store', events: 3 },
+        // { type: 'Store', events: 3 },
+        // // # Large Store
+        // { type: 'Store', events: 4 },
+        // { type: 'Store', events: 4 },
+        // { type: 'Store', events: 4 },
+        // { type: 'Store', events: 4 },
+        // { type: 'Store', events: 4 },
+        // { type: 'Store', events: 4 },
         // # Small Horde
         // {
         //   type: 'Horde',
@@ -203,12 +199,12 @@ export default {
         //   molotov: this.hordeMolotov,
         //   hitPoints: 3
         // }
-        // // # Bridge Down
-        // { type: 'Bridge Down' },
-        // { type: 'Bridge Down' },
-        // { type: 'Bridge Down' },
-        // { type: 'Bridge Down' },
-        // { type: 'Bridge Down' },
+        // # Bridge Down
+        { type: 'Bridge Down' },
+        { type: 'Bridge Down' },
+        { type: 'Bridge Down' },
+        { type: 'Bridge Down' },
+        { type: 'Bridge Down' }
         // // # Trap
         // { type: 'Trap', supply: 'Food' },
         // { type: 'Trap', supply: 'Food' },

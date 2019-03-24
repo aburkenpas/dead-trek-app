@@ -73,6 +73,10 @@ export default new Vuex.Store({
     },
     SET_CURRENT_LOOTING_CARD(state, lootCard) {
       state.currentLootCard = lootCard
+    },
+    ADD_TWO_CARDS(state) {
+      state.cardsLeft += 2
+      state.cardsLeftInBlock += 2
     }
   },
   actions: {
@@ -111,6 +115,9 @@ export default new Vuex.Store({
     },
     setCurrentLootingCard({ commit }, lootCard) {
       commit('SET_CURRENT_LOOTING_CARD', lootCard)
+    },
+    addTwoCards({ commit }) {
+      commit('ADD_TWO_CARDS')
     }
   }
 })
