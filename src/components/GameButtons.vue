@@ -218,12 +218,12 @@ export default {
         // { type: 'Trap', supply: 'Health' },
         // { type: 'Trap', supply: 'Health' },
         // // # Supply Cache
-        { type: 'Supply Cache' },
-        { type: 'Supply Cache' },
-        { type: 'Supply Cache' },
-        { type: 'Supply Cache' },
-        { type: 'Supply Cache' },
-        { type: 'Supply Cache' }
+        // { type: 'Supply Cache' },
+        // { type: 'Supply Cache' },
+        // { type: 'Supply Cache' },
+        // { type: 'Supply Cache' },
+        // { type: 'Supply Cache' },
+        // { type: 'Supply Cache' },
         // // # Survivors
         // { type: 'Survivors' },
         // { type: 'Survivors' },
@@ -231,14 +231,13 @@ export default {
         // { type: 'Survivors' },
         // { type: 'Survivors' },
         // // # Hunting
-        // { type: 'Hunting' },
-        // { type: 'Hunting' },
-        // { type: 'Hunting' },
-        // { type: 'Hunting' },
-        // { type: 'Hunting' },
-        // { type: 'Hunting' },
+        { type: 'Hunting' },
+        { type: 'Hunting' },
+        { type: 'Hunting' },
+        { type: 'Hunting' },
+        { type: 'Hunting' },
+        { type: 'Hunting' }
         // // # Boss
-
         // {
         //   type: 'Boss',
         //   name: 'Machette',

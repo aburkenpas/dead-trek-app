@@ -22,7 +22,7 @@
         />
         <img v-else-if="card.type == 'Special'" :src="card.image" :alt="card" />
         <img
-          v-else-if="card.type == 'Food'"
+          v-else-if="card.type == 'Food' || card.type == 'Hunting'"
           src="../assets/images/cards/loot/food.png"
           :alt="card"
         />

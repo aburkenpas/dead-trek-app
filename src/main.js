@@ -29,6 +29,19 @@ Vue.mixin({
       }
 
       return cardsDrawn
+    },
+    addToHand(cardToAdd, playerSupplies) {
+      let itemGained = [cardToAdd]
+
+      // Add item to supplies hand
+      itemGained.push.apply(itemGained, playerSupplies)
+
+      // Sort Cards
+      itemGained.sort((a, b) =>
+        a.type > b.type ? 1 : b.type > a.type ? -1 : 0
+      )
+
+      return itemGained
     }
   }
 })

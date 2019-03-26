@@ -30,7 +30,7 @@ export default {
       )
 
       // Set message
-      let message = `Awesome! Free supplies`
+      let message = `Awesome! Free supplies.  Play next road card.`
 
       // Set state by updating supply cards and ending looting action
       this.$store.dispatch('supplyCardsDelt', supplyGained)

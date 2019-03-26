@@ -226,6 +226,8 @@ export default {
       this.$store.dispatch('setCurrentLootingCard', lootingCard[0])
     },
     skipping() {
+      // NEED MESSAGE
+
       // Set state status
       this.$store.dispatch('setRoadCardResolved', true)
       this.$store.dispatch('lootingStatus', false)
@@ -255,18 +257,12 @@ export default {
       }
       this.$store.dispatch('updateMessage', message)
     },
-    addToHand() {
-      let itemGained = [this.currentLootCard]
-
-      // Add item to supplies hand
-      itemGained.push.apply(itemGained, this.playerSupplyCards)
-
-      // Sort Cards
-      itemGained.sort((a, b) =>
-        a.type > b.type ? 1 : b.type > a.type ? -1 : 0
+    addLootToHand() {
+      let itemGained = this.addToHand(
+        this.currentLootCard,
+        this.playerSupplyCards
       )
 
-      console.log(itemGained)
       // Update state of looting
       this.$store.dispatch('supplyCardsDelt', itemGained)
       this.$store.dispatch('setLootActionStatus', false)
