@@ -34,7 +34,6 @@ export default {
 .game-card-display {
   height: 500px;
   width: 500px;
-  background: grey;
   margin: 0 auto;
 }
 </style>

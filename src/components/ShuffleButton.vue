@@ -16,7 +16,7 @@ export default {
   }),
   methods: {
     deal() {
-      let startingCardAmount = 10
+      let startingCardAmount = 15
       let drawnCards
 
       drawnCards = this.drawCard(startingCardAmount, this.supplyCards)
@@ -41,7 +41,8 @@ export default {
 
 button {
   font-size: 20px;
-  background: green;
+  background: rgb(1, 89, 1);
+  font-family: 'VTC Letterer Pro', sans-serif;
   color: #ffffff;
   padding: 10px 40px;
   border: 0;

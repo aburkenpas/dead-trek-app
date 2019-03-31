@@ -26,6 +26,11 @@
           src="../assets/images/cards/loot/food.png"
           :alt="card"
         />
+        <img
+          v-else-if="card.type == 'Start'"
+          src="../assets/images/cards/supply/supply-card-back.png"
+          :alt="card"
+        />
       </div>
     </div>
   </div>
@@ -48,7 +53,6 @@ export default {
 
 <style>
 .current-hand {
-  background: #fff;
   display: flex;
   justify-content: space-around;
 }

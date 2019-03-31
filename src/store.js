@@ -15,16 +15,17 @@ export default new Vuex.Store({
     loser: false,
     playing: false,
     supplyCards: supplyCards,
-    playerSupplyCards: [],
+    playerSupplyCards: [{ type: 'Start' }],
     currentRoadCard: {
-      type: 'Start'
+      type: 'Back'
     },
     resolvedRoadCard: true,
     looting: false,
     inLootAction: false,
     currentLootCard: {
-      type: 'Start'
-    }
+      type: 'Back'
+    },
+    foodRequired: false
   },
   mutations: {
     INCREMENT_CARDS_LEFT(state) {
@@ -54,9 +55,21 @@ export default new Vuex.Store({
     },
     SET_ROAD_CARD_RESOLVED(state, status) {
       state.resolvedRoadCard = status
+      state.currentRoadCard = { type: 'Back' }
+
       if (status == true) {
         state.cardsLeft--
         state.cardsLeftInBlock--
+      }
+
+      if (state.cardsLeftInBlock == 0 && state.cardsLeft != 0) {
+        state.cardsLeftInBlock += 10
+        state.foodRequired = true
+      }
+
+      if (state.cardsLeft == 0) {
+        state.winner = true
+        state.message = 'You win! Congrats'
       }
     },
     REMOVE_USED_SUPPLY(state, index) {
@@ -77,6 +90,9 @@ export default new Vuex.Store({
     ADD_TWO_CARDS(state) {
       state.cardsLeft += 2
       state.cardsLeftInBlock += 2
+    },
+    FOOD_REQUIRED_STATUS(state, status) {
+      state.foodRequired = status
     }
   },
   actions: {
@@ -118,6 +134,9 @@ export default new Vuex.Store({
     },
     addTwoCards({ commit }) {
       commit('ADD_TWO_CARDS')
+    },
+    foodRequiredStatus({ commit }, status) {
+      commit('FOOD_REQUIRED_STATUS', status)
     }
   }
 })

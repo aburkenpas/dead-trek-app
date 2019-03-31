@@ -1,6 +1,8 @@
 <template>
   <div class="buttons-container trap">
-    <button v-if="!resolvedRoadCard" @click="useSupply">Use {{ currentRoadCard.supply }}</button>
+    <button v-if="!resolvedRoadCard" @click="useSupply">
+      Use {{ currentRoadCard.supply }}
+    </button>
   </div>
 </template>
 

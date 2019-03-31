@@ -1,14 +1,7 @@
 <template>
   <div class="loot-decision-buttons">
-    <button v-if="!inLootAction && looting" @click="playStoreEvent">
-      Play Looting Event
-    </button>
-    <button
-      v-if="!inLootAction && looting && currentEvent > 0"
-      @click="skipping"
-    >
-      Leave Store
-    </button>
+    <button v-if="!inLootAction && looting" @click="playStoreEvent">Play Looting Event</button>
+    <button v-if="!inLootAction && looting && currentEvent > 0" @click="skipping">Leave Store</button>
     <FightActions
       v-if="
         (currentLootCard.type == 'Single Zombie' ||
@@ -21,21 +14,15 @@
     <button
       v-else-if="currentLootCard.type == 'Supply' && inLootAction == true"
       @click="drawSupply"
-    >
-      Draw Supply Card
-    </button>
+    >Draw Supply Card</button>
     <button
       v-else-if="currentLootCard.type == 'Food' && inLootAction == true"
-      @click="addToHand"
-    >
-      Collect Food
-    </button>
+      @click="addLootToHand"
+    >Collect Food</button>
     <button
       v-else-if="currentLootCard.type == 'Special' && inLootAction == true"
-      @click="addToHand"
-    >
-      Collect Special
-    </button>
+      @click="addLootToHand"
+    >Collect Special</button>
   </div>
 </template>
 
@@ -43,7 +30,7 @@
 import FightActions from './FightActions.vue'
 import { mapState } from 'vuex'
 
-// Import data
+// Import data ( Maybe do this at some point )
 // import lootCards from './data/loot-cards.json'
 
 export default {
@@ -59,80 +46,95 @@ export default {
         {
           type: 'Single Zombie',
           melee: this.storeMelee1,
-          ammo: this.storeAmmo1
+          ammo: this.storeAmmo1,
+          hitPoints: 1
         },
         {
           type: 'Single Zombie',
           melee: this.storeMelee1,
-          ammo: this.storeAmmo1
+          ammo: this.storeAmmo1,
+          hitPoints: 1
         },
         {
           type: 'Single Zombie',
           melee: this.storeMelee1,
-          ammo: this.storeAmmo1
+          ammo: this.storeAmmo1,
+          hitPoints: 1
         },
         {
           type: 'Single Zombie',
           melee: this.storeMelee1,
-          ammo: this.storeAmmo1
+          ammo: this.storeAmmo1,
+          hitPoints: 1
         },
         {
           type: 'Single Zombie',
           melee: this.storeMelee1,
-          ammo: this.storeAmmo1
+          ammo: this.storeAmmo1,
+          hitPoints: 1
         },
         {
           type: 'Single Zombie',
           melee: this.storeMelee1,
-          ammo: this.storeAmmo1
+          ammo: this.storeAmmo1,
+          hitPoints: 1
         },
         {
           type: 'Single Zombie',
           melee: this.storeMelee1,
-          ammo: this.storeAmmo1
+          ammo: this.storeAmmo1,
+          hitPoints: 1
         },
         {
           type: 'Single Zombie',
           melee: this.storeMelee1,
-          ammo: this.storeAmmo1
+          ammo: this.storeAmmo1,
+          hitPoints: 1
         },
         {
           type: 'Single Zombie',
           melee: this.storeMelee1,
-          ammo: this.storeAmmo1
+          ammo: this.storeAmmo1,
+          hitPoints: 1
         },
         {
           type: 'Single Zombie',
           melee: this.storeMelee1,
-          ammo: this.storeAmmo1
+          ammo: this.storeAmmo1,
+          hitPoints: 1
         },
         {
           type: 'Single Zombie',
           melee: this.storeMelee1,
-          ammo: this.storeAmmo1
+          ammo: this.storeAmmo1,
+          hitPoints: 1
         },
         {
           type: 'Single Zombie',
           melee: this.storeMelee1,
-          ammo: this.storeAmmo1
+          ammo: this.storeAmmo1,
+          hitPoints: 1
         },
         {
           type: 'Single Zombie',
           melee: this.storeMelee1,
-          ammo: this.storeAmmo1
+          ammo: this.storeAmmo1,
+          hitPoints: 1
         },
         // Double Zombies
         {
           type: 'Double Zombie',
           melee: this.storeMelee2,
-          ammo: this.storeAmmo2
+          ammo: this.storeAmmo2,
+          hitPoints: 1
         },
         {
           type: 'Double Zombie',
           melee: this.storeMelee2,
-          ammo: this.storeAmmo2
+          ammo: this.storeAmmo2,
+          hitPoints: 1
         },
-        // // Supplies
+        // Supplies
         { type: 'Supply' },
         { type: 'Supply' },
         { type: 'Supply' },
@@ -215,27 +217,58 @@ export default {
   },
   methods: {
     playStoreEvent() {
+      let message
+
       // Iterate current event
       this.currentEvent++
 
       // Draw loot card
       let lootingCard = this.drawCard(1, this.lootingCards)
 
+      let currentEventCard = lootingCard[0].type
+
+      // Remove card from deck
+      let cardIndex = this.lootingCards
+        .map(function(e) {
+          return e.type
+        })
+        .indexOf(currentEventCard)
+
+      this.lootingCards.splice(cardIndex, 1)
+
+      if (currentEventCard == 'Single Zombie') {
+        message = `It's a zombie!`
+      } else if (currentEventCard == 'Double Zombie') {
+        message = `It's two zombies!`
+      } else if (currentEventCard == 'Supply') {
+        message = `Sweet a supply`
+      } else if (currentEventCard == 'Food') {
+        message = `Nice you found food`
+      } else if (currentEventCard == 'Special') {
+        message = `Awesome a special weapon`
+      }
+
       // Set state of looting and current card
+      this.$store.dispatch('updateMessage', message)
       this.$store.dispatch('setLootActionStatus', true)
       this.$store.dispatch('setCurrentLootingCard', lootingCard[0])
     },
     skipping() {
-      // NEED MESSAGE
+      // Set message
+      let message = `Store skipped.  Play next Road card`
 
       // Set state status
+      this.$store.dispatch('updateMessage', message)
       this.$store.dispatch('setRoadCardResolved', true)
       this.$store.dispatch('lootingStatus', false)
+    },
+    lootingEventsLeft() {
+      return this.events - this.currentEvent
     },
     drawSupply() {
       // Draw supply card
       let supplyGained = this.drawCard(1, this.supplyCards)
-      let cardName = supplyGained[0]
+      let cardName = supplyGained[0].type
 
       // Combine with current supplies (Mabye a better way for this)
       supplyGained.push.apply(supplyGained, this.playerSupplyCards)
@@ -246,14 +279,16 @@ export default {
       )
 
       // Set message
-      let message = `You gained a ${cardName} card! Play or Skip next loot card.`
+      let message = `You gained a ${cardName} card! Play or Skip next loot card.  Looting events left ${this.lootingEventsLeft()}`
 
       // Set state by updating supply cards and ending looting action
       this.$store.dispatch('supplyCardsDelt', supplyGained)
       this.$store.dispatch('setLootActionStatus', false)
+      this.$store.dispatch('setCurrentLootingCard', 'Start Next Loot')
       if (this.currentEvent == this.events) {
         message = `You gained a ${cardName} card! Play next Road card.`
         this.$store.dispatch('setRoadCardResolved', true)
+        this.$store.dispatch('lootingStatus', false)
       }
       this.$store.dispatch('updateMessage', message)
     },
@@ -263,12 +298,23 @@ export default {
         this.playerSupplyCards
       )
 
+      // Set message
+      let message = `You gained a ${
+        this.currentLootCard.type
+      } card! Play or Skip next loot card.  Looting events left ${this.lootingEventsLeft()}`
+
       // Update state of looting
       this.$store.dispatch('supplyCardsDelt', itemGained)
       this.$store.dispatch('setLootActionStatus', false)
+      this.$store.dispatch('setCurrentLootingCard', 'Start Next Loot')
       if (this.currentEvent == this.events) {
+        message = `You gained a ${
+          this.currentLootCard.type
+        } card! Play next Road card.`
         this.$store.dispatch('setRoadCardResolved', true)
+        this.$store.dispatch('lootingStatus', false)
       }
+      this.$store.dispatch('updateMessage', message)
     }
   }
 }
