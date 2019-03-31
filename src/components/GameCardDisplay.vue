@@ -32,7 +32,6 @@ export default {
 
 <style scoped>
 .game-card-display {
-  height: 500px;
   width: 500px;
   margin: 0 auto;
 }
