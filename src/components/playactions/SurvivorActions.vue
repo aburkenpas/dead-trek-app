@@ -10,25 +10,25 @@
     >
       Greet Survivors
     </button>
-    <button v-if="survivorsGreeted && survivorsGood" @click="supplyTransaction">
+    <button v-if="survivorsGreeted && survivorsGood" @click="getSupply">
       Get Supply
     </button>
     <span class="supply-buttons" v-else-if="survivorsGreeted && !survivorsGood">
       <button
         v-if="playerSupplyCards.find(molotov => molotov.type === 'Ammo')"
-        @click="supplyTransaction('Ammo')"
+        @click="loseSupply('Ammo')"
       >
         Give Ammo
       </button>
       <button
         v-if="playerSupplyCards.find(molotov => molotov.type === 'Health')"
-        @click="supplyTransaction('Health')"
+        @click="loseSupply('Health')"
       >
         Give Health
       </button>
       <button
         v-if="playerSupplyCards.find(molotov => molotov.type === 'Molotov')"
-        @click="supplyTransaction('Molotov')"
+        @click="loseSupply('Molotov')"
       >
         Give Molotov
       </button>
@@ -82,7 +82,7 @@ export default {
         // If no supplies lose game
         if (hasBaseSupply == -1) {
           // Set message
-          message = `You didn't have anything to give. GAME OVER`
+          message = `You didn't have anything to give, so the survivors took your lives. GAME OVER`
 
           // Update state for loser
           this.$store.dispatch('setRoadCardResolved', true)
@@ -96,41 +96,43 @@ export default {
       // Update state message
       this.$store.dispatch('updateMessage', message)
     },
-    supplyTransaction(supply) {
-      let message
+    getSupply() {
+      // Draw supply card
+      let supplyGained = this.drawCard(1, this.supplyCards)
+      let cardName = supplyGained[0].type
 
-      if (this.survivorsGood) {
-        // Draw supply card
-        let supplyGained = this.drawCard(1, this.supplyCards)
-        let cardName = supplyGained[0].type
+      // Combine with current supplies (Mabye a better way for this)
+      supplyGained.push.apply(supplyGained, this.playerSupplyCards)
 
-        // Combine with current supplies (Mabye a better way for this)
-        supplyGained.push.apply(supplyGained, this.playerSupplyCards)
+      // Sort Cards
+      supplyGained.sort((a, b) =>
+        a.type > b.type ? 1 : b.type > a.type ? -1 : 0
+      )
 
-        // Sort Cards
-        supplyGained.sort((a, b) =>
-          a.type > b.type ? 1 : b.type > a.type ? -1 : 0
-        )
+      // Set message
+      let message = `You gained a ${cardName} card! Play the next Road card.`
 
-        // Set message
-        message = `You gained a ${cardName} card! Play the next Road card.`
+      this.survivorsGreeted = false
 
-        // Set state by updating supply cards and ending looting action
-        this.$store.dispatch('supplyCardsDelt', supplyGained)
-      } else {
-        // Set message
-        message = `Well that wasn't very nice! Play the next Road card.`
+      // Set state by updating supply cards and ending looting action
+      this.$store.dispatch('supplyCardsDelt', supplyGained)
+      this.$store.dispatch('updateMessage', message)
+      this.$store.dispatch('setRoadCardResolved', true)
+    },
+    loseSupply(supply) {
+      // Set message
+      let message = `Well that wasn't very nice! Play the next Road card.`
 
-        // Find card given up
-        let cardIndex = this.playerSupplyCards
-          .map(function(e) {
-            return e.type
-          })
-          .indexOf(supply)
+      // Find card given up
+      let cardIndex = this.playerSupplyCards
+        .map(function(e) {
+          return e.type
+        })
+        .indexOf(supply)
 
-        // Update state for resolved and remove card
-        this.$store.dispatch('removeUsedSupply', cardIndex)
-      }
+      // Update state for resolved and remove card
+      this.$store.dispatch('removeUsedSupply', cardIndex)
+
       this.survivorsGreeted = false
 
       // Update state with message and resolve card

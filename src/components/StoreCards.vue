@@ -82,7 +82,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 500px;
+  min-height: 320px;
   font-size: 35px;
 }
 </style>
