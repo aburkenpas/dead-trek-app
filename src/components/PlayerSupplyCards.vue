@@ -20,7 +20,31 @@
           src="../assets/images/cards/supply/molotov.png"
           :alt="card"
         />
-        <img v-else-if="card.type == 'Special'" :src="card.image" :alt="card" />
+        <img
+          v-else-if="card.type == 'Special' && card.type == 'Chainsaw'"
+          src="../assets/images/cards/loot/chainsaw.png"
+          alt
+        />
+        <img
+          v-else-if="card.type == 'Special' && card.type == 'Flame Thrower'"
+          src="../assets/images/cards/loot/flame-thrower.png"
+          alt
+        />
+        <img
+          v-else-if="card.type == 'Special' && card.type == 'Minigun'"
+          src="../assets/images/cards/loot/minigun.png"
+          alt
+        />
+        <img
+          v-else-if="card.type == 'Special' && card.type == 'Grenade'"
+          src="../assets/images/cards/loot/grenade.png"
+          alt
+        />
+        <img
+          v-else-if="card.type == 'Special' && card.type == 'Bazooka'"
+          src="../assets/images/cards/loot/bazooka.png"
+          alt
+        />
         <img
           v-else-if="card.type == 'Food' || card.type == 'Hunting'"
           src="../assets/images/cards/loot/food.png"

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 // Import data
 import supplyCards from './data/supply-cards.json'
+import lootCards from './data/loot-cards.json'
 
 Vue.use(Vuex)
 
@@ -20,8 +21,10 @@ export default new Vuex.Store({
       type: 'Back'
     },
     resolvedRoadCard: true,
+    lootCards: lootCards,
     looting: false,
     inLootAction: false,
+    currentLootEvent: 1,
     currentLootCard: {
       type: 'Back'
     },
@@ -93,6 +96,9 @@ export default new Vuex.Store({
     },
     FOOD_REQUIRED_STATUS(state, status) {
       state.foodRequired = status
+    },
+    REMOVE_USED_LOOT_CARD(state, index) {
+      state.lootCards.splice(index, 1)
     }
   },
   actions: {
@@ -137,6 +143,9 @@ export default new Vuex.Store({
     },
     foodRequiredStatus({ commit }, status) {
       commit('FOOD_REQUIRED_STATUS', status)
+    },
+    removeUsedLootCard({ commit }, index) {
+      commit('REMOVE_USED_LOOT_CARD', index)
     }
   }
 })

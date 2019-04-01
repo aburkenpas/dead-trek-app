@@ -314,14 +314,27 @@ export default {
       //   }
       // ]
       roadCards: [
-        { type: 'Trap', supply: 'Food' },
-        { type: 'Trap', supply: 'Food' },
-        { type: 'Trap', supply: 'Health' },
-        { type: 'Trap', supply: 'Health' },
-        { type: 'Trap', supply: 'Health' },
-        { type: 'Trap', supply: 'Health' },
-        { type: 'Trap', supply: 'Health' },
-        { type: 'Trap', supply: 'Health' }
+        { type: 'Store', events: 2 },
+        { type: 'Store', events: 2 },
+        { type: 'Store', events: 2 },
+        { type: 'Store', events: 2 },
+        // # Medium Store
+        { type: 'Store', events: 3 },
+        { type: 'Store', events: 3 },
+        { type: 'Store', events: 3 },
+        { type: 'Store', events: 3 },
+        { type: 'Store', events: 3 },
+        { type: 'Store', events: 3 },
+        { type: 'Store', events: 3 },
+        { type: 'Store', events: 3 },
+        { type: 'Store', events: 3 },
+        // # Large Store
+        { type: 'Store', events: 4 },
+        { type: 'Store', events: 4 },
+        { type: 'Store', events: 4 },
+        { type: 'Store', events: 4 },
+        { type: 'Store', events: 4 },
+        { type: 'Store', events: 4 }
       ]
     }
   },
