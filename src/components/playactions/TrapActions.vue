@@ -32,9 +32,6 @@ export default {
         // Set message
         message = `Good thing you had ${this.currentRoadCard.supply}`
 
-        // Removes card from players hand
-        this.playerSupplyCards.splice(playerHasCard, 1)
-
         // Update state for resolved and remove card
         this.$store.dispatch('removeUsedSupply', playerHasCard)
         this.$store.dispatch('setRoadCardResolved', true)

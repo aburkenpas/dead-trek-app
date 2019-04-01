@@ -130,12 +130,10 @@ export default {
         })
         .indexOf(supply)
 
-      // Update state for resolved and remove card
-      this.$store.dispatch('removeUsedSupply', cardIndex)
-
       this.survivorsGreeted = false
 
       // Update state with message and resolve card
+      this.$store.dispatch('removeUsedSupply', cardIndex)
       this.$store.dispatch('updateMessage', message)
       this.$store.dispatch('setRoadCardResolved', true)
     }

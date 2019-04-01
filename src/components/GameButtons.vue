@@ -8,19 +8,23 @@
           !winner
       "
       @click="playRoadCard"
-    >Play Road Card</button>
-    <StoreActions v-if="currentRoadCard.type == 'Store' && resolvedRoadCard == false"/>
+    >
+      Play Road Card
+    </button>
+    <StoreActions
+      v-if="currentRoadCard.type == 'Store' && resolvedRoadCard == false"
+    />
     <FightActions
       v-else-if="
         (currentRoadCard.type == 'Horde' && resolvedRoadCard == false) ||
           (currentRoadCard.type == 'Boss' && resolvedRoadCard == false)
       "
     />
-    <BridgeDownActions v-else-if="currentRoadCard.type == 'Bridge Down'"/>
-    <TrapActions v-else-if="currentRoadCard.type == 'Trap'"/>
-    <SupplyCacheActions v-else-if="currentRoadCard.type == 'Supply Cache'"/>
-    <SurvivorActions v-else-if="currentRoadCard.type == 'Survivors'"/>
-    <HuntingActions v-else-if="currentRoadCard.type == 'Hunting'"/>
+    <BridgeDownActions v-else-if="currentRoadCard.type == 'Bridge Down'" />
+    <TrapActions v-else-if="currentRoadCard.type == 'Trap'" />
+    <SupplyCacheActions v-else-if="currentRoadCard.type == 'Supply Cache'" />
+    <SurvivorActions v-else-if="currentRoadCard.type == 'Survivors'" />
+    <HuntingActions v-else-if="currentRoadCard.type == 'Hunting'" />
     <button v-if="loser || winner" @click="playAgain">Play agian</button>
     <button v-if="foodRequired" @click="useFood">Use Food</button>
   </div>
@@ -310,20 +314,14 @@ export default {
       //   }
       // ]
       roadCards: [
-        // Survivors
-        { type: 'Survivors' },
-        { type: 'Survivors' },
-        { type: 'Survivors' },
-        { type: 'Survivors' },
-        { type: 'Survivors' },
-        { type: 'Survivors' },
-        { type: 'Survivors' },
-        { type: 'Survivors' },
-        { type: 'Survivors' },
-        { type: 'Survivors' },
-        { type: 'Survivors' },
-        { type: 'Survivors' },
-        { type: 'Survivors' }
+        { type: 'Trap', supply: 'Food' },
+        { type: 'Trap', supply: 'Food' },
+        { type: 'Trap', supply: 'Health' },
+        { type: 'Trap', supply: 'Health' },
+        { type: 'Trap', supply: 'Health' },
+        { type: 'Trap', supply: 'Health' },
+        { type: 'Trap', supply: 'Health' },
+        { type: 'Trap', supply: 'Health' }
       ]
     }
   },
