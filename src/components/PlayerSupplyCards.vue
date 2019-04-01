@@ -11,47 +11,47 @@
           :alt="card"
         />
         <img
-          v-else-if="card.type == 'Health'"
+          v-if="card.type == 'Health'"
           src="../assets/images/cards/supply/health.png"
           :alt="card"
         />
         <img
-          v-else-if="card.type == 'Molotov'"
+          v-if="card.type == 'Molotov'"
           src="../assets/images/cards/supply/molotov.png"
           :alt="card"
         />
         <img
-          v-else-if="card.type == 'Special' && card.type == 'Chainsaw'"
+          v-if="card.type == 'Special' && card.item == 'Chainsaw'"
           src="../assets/images/cards/loot/chainsaw.png"
           alt
         />
         <img
-          v-else-if="card.type == 'Special' && card.type == 'Flame Thrower'"
+          v-if="card.type == 'Special' && card.item == 'Flame Thrower'"
           src="../assets/images/cards/loot/flame-thrower.png"
           alt
         />
         <img
-          v-else-if="card.type == 'Special' && card.type == 'Minigun'"
+          v-if="card.type == 'Special' && card.item == 'Minigun'"
           src="../assets/images/cards/loot/minigun.png"
           alt
         />
         <img
-          v-else-if="card.type == 'Special' && card.type == 'Grenade'"
+          v-if="card.type == 'Special' && card.item == 'Grenade'"
           src="../assets/images/cards/loot/grenade.png"
           alt
         />
         <img
-          v-else-if="card.type == 'Special' && card.type == 'Bazooka'"
+          v-if="card.type == 'Special' && card.item == 'Bazooka'"
           src="../assets/images/cards/loot/bazooka.png"
           alt
         />
         <img
-          v-else-if="card.type == 'Food' || card.type == 'Hunting'"
+          v-if="card.type == 'Food' || card.type == 'Hunting'"
           src="../assets/images/cards/loot/food.png"
           :alt="card"
         />
         <img
-          v-else-if="card.type == 'Start'"
+          v-if="card.type == 'Start'"
           src="../assets/images/cards/supply/supply-card-back.png"
           :alt="card"
         />
