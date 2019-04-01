@@ -1,6 +1,6 @@
 <template>
-  <div class="shuffle-button-container">
-    <button @click="deal" v-if="!playing">Deal Supply Cards</button>
+  <div v-if="!playing" class="shuffle-button-container">
+    <button @click="deal">Deal Supply Cards</button>
   </div>
 </template>
 
