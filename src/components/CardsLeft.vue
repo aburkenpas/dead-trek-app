@@ -1,9 +1,13 @@
 <template>
   <div class="cards-left">
-    <div class="title">Cards Left</div>
-    <div class="number">{{ cardsLeft }}</div>
-    <div class="title">Block</div>
-    <div class="number">{{ cardsLeftInBlock }}</div>
+    <div class="display-container">
+      <div class="title">Cards Left</div>
+      <div class="number">{{ cardsLeft }}</div>
+    </div>
+    <div class="display-container">
+      <div class="title">Block</div>
+      <div class="number">{{ cardsLeftInBlock }}</div>
+    </div>
   </div>
 </template>
 
@@ -38,5 +42,21 @@ export default {
   font-size: 40px;
   text-align: center;
   padding-bottom: 8px;
+}
+
+@media screen and (max-width: 950px) {
+  .cards-left {
+    position: relative;
+    display: flex;
+    color: white;
+    width: 200px;
+    margin: 20px auto 0;
+    padding-top: 10px;
+    right: 0;
+  }
+
+  .display-container {
+    padding: 0 20px;
+  }
 }
 </style>

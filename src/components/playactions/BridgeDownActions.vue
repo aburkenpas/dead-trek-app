@@ -1,6 +1,6 @@
 <template>
   <div class="buttons-container bridge-down">
-    <button v-if="!resolvedRoadCard" @click="addTwoCards">
+    <button class="danger" v-if="!resolvedRoadCard" @click="addTwoCards">
       Detour Add - Two Cards
     </button>
   </div>

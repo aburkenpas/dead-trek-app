@@ -1,9 +1,15 @@
 <template>
   <div class="buttons-container hunting">
-    <button v-if="!resolvedRoadCard && playerHasAmmo != -1" @click="hunt">
+    <button
+      class="danger"
+      v-if="!resolvedRoadCard && playerHasAmmo != -1"
+      @click="hunt"
+    >
       Use Ammo To Hunt
     </button>
-    <button v-if="!resolvedRoadCard" @click="skip">Skip Hunting</button>
+    <button class="caution" v-if="!resolvedRoadCard" @click="skip">
+      Skip Hunting
+    </button>
   </div>
 </template>
 
@@ -69,4 +75,12 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+</style>

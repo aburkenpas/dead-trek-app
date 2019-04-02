@@ -1,15 +1,17 @@
 <template>
   <div class="fight-buttons">
     <div class="buttons-container">
-      <button @click="fight('melee')">Melee Attack</button>
+      <button class="danger" @click="fight('melee')">Melee Attack</button>
       <!-- Need to check if card is in players hand for bottom two -->
       <button
+        class="danger"
         v-if="playerSupplyCards.find(ammo => ammo.type === 'Ammo')"
         @click="fight('ammo')"
       >
         Ammo Attack
       </button>
       <button
+        class="danger"
         v-if="
           playerSupplyCards.find(molotov => molotov.type === 'Molotov') &&
             !looting
@@ -19,6 +21,7 @@
         Molotov Attack
       </button>
       <button
+        class="danger"
         v-if="
           playerSupplyCards.find(molotov => molotov.type === 'Special') &&
             !looting
@@ -209,6 +212,7 @@ export default {
 
 .buttons-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   max-width: 800px;
   margin: 0 auto;

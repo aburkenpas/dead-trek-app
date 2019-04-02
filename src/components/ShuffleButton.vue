@@ -38,17 +38,4 @@ export default {
 .shuffle-button-container {
   padding: 50px 0;
 }
-
-button {
-  font-size: 20px;
-  background: rgb(1, 89, 1);
-  font-family: 'VTC Letterer Pro', sans-serif;
-  color: #ffffff;
-  padding: 10px 40px;
-  border: 0;
-  border-radius: 3px;
-  margin: 0 auto;
-  display: block;
-  cursor: pointer;
-}
 </style>

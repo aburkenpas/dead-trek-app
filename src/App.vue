@@ -31,7 +31,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Bangers');
 @font-face {
   font-family: 'VTC Letterer Pro';
@@ -67,5 +67,73 @@ body {
   position: absolute;
   width: 150px;
   height: auto;
+}
+
+button {
+  font-size: 20px;
+  background: rgb(1, 89, 1);
+  font-family: 'VTC Letterer Pro', sans-serif;
+  color: #ffffff;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 6px #01300f;
+  padding: 10px 40px;
+  border: 0;
+  border-radius: 3px;
+  margin: 10px auto;
+  display: block;
+  position: relative;
+  cursor: pointer;
+  transition: none;
+  outline: none;
+
+  &:hover {
+    box-shadow: 0 4px #01300f;
+    top: 2px;
+  }
+
+  &:active {
+    box-shadow: 0 0 #01300f;
+    top: 6px;
+  }
+}
+
+button.caution {
+  background: #fdca40;
+  box-shadow: 0 6px #b6922d;
+
+  &:hover {
+    box-shadow: 0 4px #b6922d;
+    top: 2px;
+  }
+
+  &:active {
+    box-shadow: 0 0 #b6922d;
+    top: 6px;
+  }
+}
+
+button.danger {
+  background: rgb(147, 32, 11);
+  box-shadow: 0 6px #6c0606;
+
+  &:hover {
+    box-shadow: 0 4px #6c0606;
+    top: 2px;
+  }
+
+  &:active {
+    box-shadow: 0 0 #6c0606;
+    top: 6px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .logo {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 150px;
+    height: auto;
+  }
 }
 </style>

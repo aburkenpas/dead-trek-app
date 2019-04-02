@@ -1,6 +1,7 @@
 <template>
   <div class="buttons-container survivors">
     <button
+      class="caution"
       v-if="
         !resolvedRoadCard &&
           playerSupplyCards.length != 0 &&
@@ -15,18 +16,21 @@
     </button>
     <span class="supply-buttons" v-else-if="survivorsGreeted && !survivorsGood">
       <button
+        class="danger"
         v-if="playerSupplyCards.find(molotov => molotov.type === 'Ammo')"
         @click="loseSupply('Ammo')"
       >
         Give Ammo
       </button>
       <button
+        class="danger"
         v-if="playerSupplyCards.find(molotov => molotov.type === 'Health')"
         @click="loseSupply('Health')"
       >
         Give Health
       </button>
       <button
+        class="danger"
         v-if="playerSupplyCards.find(molotov => molotov.type === 'Molotov')"
         @click="loseSupply('Molotov')"
       >
@@ -144,6 +148,7 @@ export default {
 <style scoped>
 .supply-buttons {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
 }
 </style>

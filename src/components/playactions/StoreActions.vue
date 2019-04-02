@@ -1,7 +1,11 @@
 <template>
   <div class="store-action-buttons">
-    <button v-if="!looting" @click="startLooting">Loot Store</button>
-    <button v-if="!looting" @click="skipping">Skip Store</button>
+    <button class="caution" v-if="!looting" @click="startLooting">
+      Loot Store
+    </button>
+    <button class="caution" v-if="!looting" @click="skipping">
+      Skip Store
+    </button>
     <LootingActions v-if="looting" />
   </div>
 </template>
@@ -42,6 +46,7 @@ export default {
 <style scoped>
 .store-action-buttons {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   max-width: 700px;
   margin: 0 auto;

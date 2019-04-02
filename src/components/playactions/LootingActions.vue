@@ -1,9 +1,14 @@
 <template>
   <div class="loot-decision-buttons">
-    <button v-if="!inLootAction && looting" @click="playStoreEvent">
+    <button
+      class="caution"
+      v-if="!inLootAction && looting"
+      @click="playStoreEvent"
+    >
       Play Looting Event {{ currentEvent + 1 }}
     </button>
     <button
+      class="caution"
       v-if="!inLootAction && looting && currentEvent > 0"
       @click="skipping"
     >
@@ -174,6 +179,7 @@ export default {
 <style scoped>
 .loot-decision-buttons {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
 }
 </style>
