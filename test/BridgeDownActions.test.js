@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
-import BridgeDownActions from '~/components/BridgeDownActions.vue'
+import BridgeDownActions from '@/components/playactions/BridgeDownActions.vue'
+import { mapState } from 'vuex'
 
 describe('BridgeDownActions.vue', () => {
   beforeEach(() => {
