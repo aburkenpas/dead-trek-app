@@ -1,13 +1,8 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-
 // Import data
 import supplyCards from './data/supply-cards.json'
 import lootCards from './data/loot-cards.json'
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export default {
   state: {
     cardsLeft: 50,
     cardsLeftInBlock: 10,
@@ -31,15 +26,6 @@ export default new Vuex.Store({
     foodRequired: false
   },
   mutations: {
-    INCREMENT_CARDS_LEFT(state) {
-      state.cardsLeft -= 1
-    },
-    INCREMENT_CARDS_LEFT_IN_BLOCK(state) {
-      state.cardsLeftInBlock -= 1
-    },
-    WINNER(state) {
-      state.winner = true
-    },
     LOSER(state) {
       state.loser = true
     },
@@ -108,9 +94,6 @@ export default new Vuex.Store({
     startGame({ commit }) {
       commit('PLAYING')
     },
-    updateCardsLeft({ commit }) {
-      commit('INCREMENT_CARDS_LEFT')
-    },
     supplyCardsDelt({ commit }, supplyCards) {
       commit('DEAL_SUPPLY_CARDS', supplyCards)
     },
@@ -148,4 +131,4 @@ export default new Vuex.Store({
       commit('REMOVE_USED_LOOT_CARD', index)
     }
   }
-})
+}
